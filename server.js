@@ -35,7 +35,7 @@ app.use(expressValidator());
 
 // Routes
 app.get('/', (req, res) => {
-    res.render('index')
+    res.render('posts-index', posts)
 });
 
 app.get('/posts/new', (req, res) => {
