@@ -48,3 +48,7 @@ app.get('/posts/new', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Redit tutorial listening on port localhost:${PORT}!`);
 });
+
+
+//To run tests export our app variables that mocha needs in order to successfully run our tests.
+module.exports = app;
