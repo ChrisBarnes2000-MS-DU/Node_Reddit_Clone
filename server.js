@@ -42,6 +42,18 @@ app.get('/posts/new', (req, res) => {
     res.render('posts-new')
 });
 
+// SUBREDDIT
+app.get("/n/:subreddit", function (req, res) {
+    // console.log(req.params.subreddit);
+    Post.find({ subreddit: req.params.subreddit })
+        .then(posts => {
+            res.render("posts-index", { posts });
+        })
+        .catch(err => {
+            console.log(err);
+        });
+});
+
 
 
 // Start Server
