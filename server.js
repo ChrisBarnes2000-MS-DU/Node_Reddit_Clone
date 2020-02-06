@@ -10,10 +10,6 @@ require('./data/reddit-db');
 const app = express();
 app.use(express.static('public'));
 
-// Controller Apps
-require('./controllers/posts.js')(app);
-
-
 // Middleware
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
@@ -42,6 +38,7 @@ app.get('/posts/new', (req, res) => {
     res.render('posts-new')
 });
 
+
 // SUBREDDIT
 app.get("/n/:subreddit", function (req, res) {
     // console.log(req.params.subreddit);
@@ -54,6 +51,8 @@ app.get("/n/:subreddit", function (req, res) {
         });
 });
 
+// Controller Apps
+require('./controllers/posts.js')(app);
 
 
 // Start Server
