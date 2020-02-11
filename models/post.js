@@ -4,10 +4,10 @@ const Schema = mongoose.Schema;
 const PostSchema = new Schema({
     createdAt: { type: Date },
     updatedAt: { type: Date },
-    title: { type: String, required: false },
-    url: { type: String, required: false },
-    summary: { type: String, required: false },
-    subreddit: { type: String, required: false },
+    title: { type: String, required: true },
+    url: { type: String, required: true },
+    summary: { type: String, required: true },
+    subreddit: { type: String, required: true },
 });
 
 PostSchema.pre("save", function (next) {

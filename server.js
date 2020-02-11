@@ -1,65 +1,59 @@
-// Require Libraries
-require('dotenv').config();
-const express = require('express');
-const PORT = process.env.PORT;
-
+//=================================INITIAL=================================\\
 // Set db
 require('./data/reddit-db');
+require('dotenv').config();
 
-// App Setup
+const express = require('express');
 const app = express();
-app.use(express.static('public'));
 
-// Middleware
+const path = require('path');
 const bodyParser = require('body-parser');
-const exphbs = require('express-handlebars');
+
+const exphbs = require('express-handlebars').create({
+    layoutsDir: path.join(__dirname, "views/layouts"),
+    partialsDir: path.join(__dirname, "views/partials"),
+    defaultLayout: 'main',
+    extname: 'hbs'
+});
 const expressValidator = require('express-validator');
 
-// Use Body Parser
+// const methodOverride = require('method-override');
+
+const PORT = process.env.PORT;
+
+
+
+
+//=================================MIDDLEWARE=================================\\
+
+// Handlebars
+app.engine('hbs', exphbs.engine)
+app.set('view engine', 'hbs');
+
+// Body Parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
-// Use Handle Bars 
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
-app.set('view engine', 'handlebars');
-
 // Add after body parser initialization!
 app.use(expressValidator());
 
+// Method Override
+// app.use(methodOverride('_method'));
+
+app.use(express.static('public'));
 
 
+//=================================CONTROLLERS=================================\\
 
-// Routes
-app.get('/', (req, res) => {
-    res.render('posts-index')
-});
-
-app.get('/posts/new', (req, res) => {
-    res.render('posts-new')
-});
-
-
-// SUBREDDIT
-app.get("/n/:subreddit", function (req, res) {
-    // console.log(req.params.subreddit);
-    Post.find({ subreddit: req.params.subreddit })
-        .then(posts => {
-            res.render("posts-index", { posts });
-        })
-        .catch(err => {
-            console.log(err);
-        });
-});
-
-// Controller Apps
+//Posts App
 require('./controllers/posts.js')(app);
 
 
+
+//=================================LISTEN=================================\\
 // Start Server
 app.listen(PORT, () => {
     console.log(`Redit tutorial listening on port localhost:${PORT}!`);
 });
-
 
 //To run tests export our app variables that mocha needs in order to successfully run our tests.
 module.exports = app;

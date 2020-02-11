@@ -1,39 +1,36 @@
-const Post = require('../models/post');
+const Post = require('../models/post.js');
 
 module.exports = (app) => {
     // INDEX
-    app.post('/', (req, res) => {
-        Post.find({})
-            .then(posts => {
-                res.render("posts-index", { posts });
-            })
-            .catch(err => {
-                console.log(err.message);
-            });
+    app.get('/', function (req, res) {
+        Post.find({}).lean().then(posts => {
+            res.render("posts-index.hbs", { posts });
+        }).catch(err => {
+            console.log(err.message);
+        });
+    });
+
+    //NEW
+    app.get("/posts/new", function (req, res) {
+        res.render("posts-new.hbs");
     });
 
     // CREATE
-    app.post('/posts/new', (req, res) => {
-        // INSTANTIATE INSTANCE OF POST MODEL
+    app.post('/posts/new', function (req, res) {
         const post = new Post(req.body);
-
-        // SAVE INSTANCE OF POST MODEL TO DB
-        post.save((err, post) => {
-            // REDIRECT TO THE ROOT
+        post.save( (err, post) => {
             console.log(err)
             console.log(post)
             return res.redirect(`/`);
         })
     });
 
-    app.get("/posts/:id", function (req, res) {
-        // LOOK UP THE POST
-        Post.findById(req.params.id)
-            .then(post => {
-                res.render("posts-show", { post });
-            })
-            .catch(err => {
-                console.log(err.message);
-            });
-    });
+    // SHOW one Post
+    // app.get("/posts/:id", function (req, res) {
+    //     Post.findById(req.params.id).then(post => {
+    //         res.render("posts-show.hbs", { post });
+    //     }).catch(err => {
+    //         console.log(err.message);
+    //     });
+    // });
 };

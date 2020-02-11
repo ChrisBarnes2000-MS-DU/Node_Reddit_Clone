@@ -1,6 +1,5 @@
 <div class="row mt-5">
     <div class="col-sm-4 col-sm-offset-4">
-        {{!-- {% csrf_token %} --}}
         <form action="/posts/new" method="post" enctype="multipart/form-data">
             <legend>New Post</legend>
             <div class="form-group">
@@ -21,9 +20,6 @@
             </div>
             <div class='text-right'>
                 <button type="submit" class="btn btn-primary">Create Post</button>
-                {{!-- {% if user == page.author %} --}}
-                {{!-- <button class="btn btn-default" formaction="{% url 'delete-page' page.slug %}"><i class="fas fa-trash"></i></button> --}}
-                {{!-- {% endif%} --}}
             </div>
         </form>
     </div>
