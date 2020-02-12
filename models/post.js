@@ -10,7 +10,7 @@ const PostSchema = new Schema({
     subreddit: { type: String, required: true },
 });
 
-PostSchema.pre("save", function (next) {
+PostSchema.pre("save", (next) => {
     // SET createdAt AND updatedAt
     const now = new Date();
     this.updatedAt = now;

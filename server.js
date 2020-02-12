@@ -7,16 +7,11 @@ require('./data/reddit-db');
 
 const app = express();
 const PORT = process.env.PORT;
-const path = require('path');
 
-const exphbs = require('express-handlebars').create({
-    layoutsDir: path.join(__dirname, "views/layouts"),
-    partialsDir: path.join(__dirname, "views/partials"),
-    defaultLayout: 'main',
-    extname: 'hbs'
-});
+const exphbs = require('express-handlebars').create({extname: 'hbs'});
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
+
 
 
 //=================================MIDDLEWARE=================================\\
@@ -30,8 +25,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 // Add after body parser initialization!
 app.use(expressValidator());
-
-// app.use(express.static('public'));
 
 
 

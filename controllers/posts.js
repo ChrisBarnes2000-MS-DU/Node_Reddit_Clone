@@ -17,20 +17,21 @@ module.exports = app => {
 
     // CREATE
     app.post('/posts/new', (req, res) => {
+        console.log(`Body Return: ${req.body}`)
         const post = new Post(req.body);
         post.save((err, post) => {
             console.log(`Error: ${err}`);
             console.log(`Post: ${post}`);
-            return res.redirect(`/`);
+            return res.redirect('/');
         })
     });
 
     // SHOW one Post
-    // app.get("/posts/:id", function (req, res) {
-    //     Post.findById(req.params.id).then(post => {
-    //         res.render("posts-show.hbs", { post });
-    //     }).catch(err => {
-    //         console.log(err.message);
-    //     });
-    // });
+    app.get("/posts/:id", function (req, res) {
+        Post.findById(req.params.id).lean().then(post => {
+            res.render("posts-show.hbs", { post });
+        }).catch(err => {
+            console.log(err.message);
+        });
+    });
 };

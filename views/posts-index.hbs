@@ -6,6 +6,7 @@
             <ul>
                 {{#each posts}}
                     <li class="list-group-item">
+                        <div class="lead">{{this._id}}</div>
                         <div class="lead">{{this.title}}</div>
                         <a href="{{this.url}}" target="_blank">{{this.url}}</a>
                         <div class="text-right">
@@ -15,7 +16,7 @@
                 {{/each}}
             </ul>
         {{else }}
-            <h1>No Posts Found</h1>
+            <h1 style="text-align: center; color:red">No Posts Found</h1>
         {{/if }}
     </div>
 </div>
