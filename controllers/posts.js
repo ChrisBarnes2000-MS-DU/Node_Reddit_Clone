@@ -1,8 +1,8 @@
 const Post = require('../models/post.js');
 
-module.exports = (app) => {
+module.exports = app => {
     // INDEX
-    app.get('/', function (req, res) {
+    app.get('/', (req, res) => {
         Post.find({}).lean().then(posts => {
             res.render("posts-index.hbs", { posts });
         }).catch(err => {
@@ -11,16 +11,16 @@ module.exports = (app) => {
     });
 
     //NEW
-    app.get("/posts/new", function (req, res) {
+    app.get("/posts/new", (req, res) => {
         res.render("posts-new.hbs");
     });
 
     // CREATE
-    app.post('/posts/new', function (req, res) {
+    app.post('/posts/new', (req, res) => {
         const post = new Post(req.body);
-        post.save( (err, post) => {
-            console.log(err)
-            console.log(post)
+        post.save((err, post) => {
+            console.log(`Error: ${err}`);
+            console.log(`Post: ${post}`);
             return res.redirect(`/`);
         })
     });
