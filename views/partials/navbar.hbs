@@ -22,9 +22,12 @@
         </div>
 
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="/logout">Logout</a></li>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/sign-up">Sign Up</a></li>
+            {{!-- {{#unless currentUser}} --}}
+            <li><a href="/logout"><button>Logout</button></a></li>
+            {{!-- {{else}} --}}
+            <li><a href="/login"><button>Login</button></a></li>
+            {{!-- {{/unless}} --}}
+            <li><a href="/sign-up"><button>Sign Up</button></a></li>
         </ul>
     </div>
     </div>
