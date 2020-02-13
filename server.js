@@ -33,13 +33,15 @@ app.use(expressValidator());
 //Posts App
 require('./controllers/posts.js')(app);
 
+//Comments App
+require('./controllers/comments.js')(app);
 
 
 //=================================LISTEN=================================\\
+//To run tests export our app variables that mocha needs in order to successfully run our tests.
+module.exports = app;
+
 // Start Server
 app.listen(PORT, () => {
     console.log(`Redit tutorial listening on port localhost:${PORT}!`);
 });
-
-//To run tests export our app variables that mocha needs in order to successfully run our tests.
-module.exports = app;
