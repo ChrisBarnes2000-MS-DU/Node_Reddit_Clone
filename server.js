@@ -1,6 +1,8 @@
 //=================================INITIAL=================================\\
 require('dotenv').config();
 const express = require('express');
+const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
 
 // Set db
 require('./data/reddit-db');
@@ -11,6 +13,8 @@ const PORT = process.env.PORT;
 const exphbs = require('express-handlebars').create({extname: 'hbs'});
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
+
+app.use(cookieParser());
 
 
 
@@ -30,11 +34,15 @@ app.use(expressValidator());
 
 //=================================CONTROLLERS=================================\\
 
+//Authentication App
+require('./controllers/auth.js')(app);
+
 //Posts App
 require('./controllers/posts.js')(app);
 
 //Comments App
 require('./controllers/comments.js')(app);
+
 
 
 //=================================LISTEN=================================\\
