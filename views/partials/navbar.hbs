@@ -12,7 +12,9 @@
                     <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/posts/new">New Page</a>
+                    {{#if currentUser}}
+                        <a href="/posts/new" class="btn btn-primary navbar-btn">New Post</a>
+                    {{/if}}
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
@@ -22,12 +24,12 @@
         </div>
 
         <ul class="nav navbar-nav navbar-right">
-            {{!-- {{#unless currentUser}} --}}
-            <li><a href="/logout"><button>Logout</button></a></li>
-            {{!-- {{else}} --}}
-            <li><a href="/login"><button>Login</button></a></li>
-            {{!-- {{/unless}} --}}
-            <li><a href="/sign-up"><button>Sign Up</button></a></li>
+            {{#if currentUser}}
+                <li><a href="/logout"><button>Logout</button></a></li>
+            {{else}}
+                <li><a href="/login"><button>Login</button></a></li>
+                <li><a href="/sign-up"><button>Sign Up</button></a></li>
+            {{/if}}
         </ul>
     </div>
     </div>
