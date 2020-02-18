@@ -35,7 +35,6 @@ module.exports = app  => {
         const password = req.body.password;
         // Find this user name
         User.findOne({ username }, "username password")
-            .lean()
             .then(user => {
                 if (!user) {
                     // User not found

@@ -1,8 +1,7 @@
 //=================================INITIAL=================================\\
 require('dotenv').config();
 const express = require('express');
-const cookieParser = require('cookie-parser');
-const jwt = require('jsonwebtoken');
+
 
 // Set db
 require('./data/reddit-db');
@@ -14,21 +13,12 @@ const exphbs = require('express-handlebars').create({extname: 'hbs'});
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 
-app.use(cookieParser());
-
-
+const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
 
 //=================================MIDDLEWARE=================================\\
 
-// Handlebars
-app.engine('hbs', exphbs.engine)
-app.set('view engine', 'hbs');
 
-// Body Parser
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-// Add after body parser initialization!
-app.use(expressValidator());
 
 const checkAuth = (req, res, next) => {
     // console.log("Checking authentication");
@@ -42,6 +32,20 @@ const checkAuth = (req, res, next) => {
 
     next();
 };
+
+app.use(cookieParser());
+
+// Handlebars
+app.engine('hbs', exphbs.engine)
+app.set('view engine', 'hbs');
+
+// Body Parser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// Add after body parser initialization!
+app.use(expressValidator());
+
 app.use(checkAuth);
 
 
