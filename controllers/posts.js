@@ -21,14 +21,16 @@ module.exports = app => {
     });
 
     // CREATE
-    app.post('/posts/new', (req, res) => {
-        // console.log(`Body Return: ${req.body}`)
-        const post = new Post(req.body);
-        post.save((err, post) => {
-            console.log(`Error: ${err}`);
-            console.log(`Post: ${post}`);
-            return res.redirect('/');
-        })
+    app.post("/posts/new", (req, res) => {
+        if (req.user) {
+            const post = new Post(req.body);
+
+            post.save(function (err, post) {
+                return res.redirect(`/`);
+            });
+        } else {
+            return res.status(401); // UNAUTHORIZED
+        }
     });
 
     // SHOW one Post
