@@ -17,6 +17,18 @@ module.exports = app => {
             })
     })
 
+    // PROFILES
+    app.get('/users/:username', (req, res) => {
+        const currentUser = req.user;
+        Post.find({ username: req.params.username }).populate({ path: 'comments', populate: { path: 'username' } }).populate('username')
+            .lean()
+            .then(posts => {
+                res.render('posts-index', { posts, currentUser });
+            }).catch(err => {
+                console.log(err.message);
+            })
+    })
+
     //NEW
     app.get("/posts/new", (req, res) => {
         const currentUser = req.user;
