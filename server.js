@@ -58,6 +58,8 @@ require('./controllers/posts.js')(app);
 //Comments App
 require('./controllers/comments.js')(app);
 
+//Replies App
+require('./controllers/replies.js')(app);
 
 
 //=================================LISTEN=================================\\
