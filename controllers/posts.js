@@ -3,7 +3,7 @@ const Post = require('../models/post.js');
 module.exports = app => {
     // INDEX
     app.get("/", (req, res) => {
-        var currentUser = req.user;
+        const currentUser = req.user;
 
         Post.find({})
             .lean()
@@ -17,6 +17,7 @@ module.exports = app => {
 
     //NEW
     app.get("/posts/new", (req, res) => {
+        const currentUser = req.user;
         res.render("posts-new.hbs", { currentUser });
     });
 
@@ -26,7 +27,7 @@ module.exports = app => {
             const post = new Post(req.body);
 
             post.save(function (err, post) {
-                return res.redirect(`/`);
+                return res.redirect('/');
             });
         } else {
             return res.status(401); // UNAUTHORIZED
