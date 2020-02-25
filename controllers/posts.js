@@ -4,7 +4,7 @@ const User = require('../models/user');
 module.exports = app => {
     // INDEX
     app.get('/', (req, res) => {
-        var currentUser = req.user;
+        const currentUser = req.user;
         // res.render('home', {});
         console.log(req.cookies);
         Post.find().populate('author')
@@ -26,7 +26,7 @@ module.exports = app => {
     // CREATE
     app.post("/posts/new", (req, res) => {
         if (req.user) {
-            var post = new Post(req.body);
+            const post = new Post(req.body);
             post.author = req.user._id;
 
             post
@@ -50,10 +50,10 @@ module.exports = app => {
 
     // SHOW One Post
     app.get("/posts/:id", function (req, res) {
-        var currentUser = req.user;
+        const currentUser = req.user;
         // LOOK UP THE POST
 
-        Post.findById(req.params.id).populate('comments').populate('author')
+        Post.findById(req.params.id).populate({ path: 'comments', populate: { path: 'author' } }).populate('author')
             .lean()
             .then(post => {
                 res.render("posts-show", { post, currentUser });
@@ -65,7 +65,7 @@ module.exports = app => {
 
     // SUBREDDIT
     app.get("/n/:subreddit", function (req, res) {
-        var currentUser = req.user;
+        const currentUser = req.user;
         Post.find({ subreddit: req.params.subreddit }).populate('author')
             .lean()
             .then(posts => {
