@@ -20,12 +20,8 @@
     </form>
 </div>
 
-<div class="row">
-    {{#each post.comments}}
-        <p>{{this.content}}</p>
-        <a href="/users/:{{this.author.username}}">
-            <p class="text-right">{{this.author.username}}</p>
-            <a href="/posts/{{../post._id}}/comments/{{this._id}}/replies/new">Reply</a>
-        </a>
-    {{/each}}
-</div>
+{{#each post.comments}}
+    <div class="row">
+        {{> comment comment=this postId=../post._id}}
+    </div>
+{{/each}}
