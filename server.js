@@ -37,7 +37,7 @@ app.use(cookieParser());
 app.engine('hbs', exphbs.engine)
 app.set('view engine', 'hbs');
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static('public'));
 
 // Body Parser
 app.use(bodyParser.json());
