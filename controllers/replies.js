@@ -5,6 +5,7 @@ const User = require("../models/user");
 module.exports = app => {
     // NEW REPLY
     app.get("/posts/:postId/comments/:commentId/replies/new", (req, res) => {
+        const currentUser = req.user;
         let post;
         Post.findById(req.params.postId)
             .lean()
@@ -13,7 +14,7 @@ module.exports = app => {
                 return Comment.findById(req.params.commentId).lean();
             })
             .then(comment => {
-                res.render("replies-new", { post, comment });
+                res.render("replies-new", { post, comment, currentUser});
             })
             .catch(err => {
                 console.log(err.message);
@@ -32,7 +33,7 @@ module.exports = app => {
                 // FIND THE CHILD COMMENT
                 Promise.all([
                     reply.save(),
-                    Comment.findById(req.params.commentId).lean(),
+                    Comment.findById(req.params.commentId),
                 ])
                     .then(([reply, comment]) => {
                         // ADD THE REPLY
@@ -43,7 +44,7 @@ module.exports = app => {
                         ]);
                     })
                     .then(() => {
-                        res.redirect('/posts/${req.params.postId}');
+                        res.redirect(`/posts/${req.params.postId}`);
                     })
                     .catch(console.error);
                 // SAVE THE CHANGE TO THE PARENT DOCUMENT
