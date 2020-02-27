@@ -16,17 +16,18 @@ chai.should();
 chai.use(chaiHttp);
 
 describe('Posts', function () {
-    const agent = chai.request.agent(server);
+    // const agent = chai.requ est.agent(server);
     // Post that we'll use for testing purposes
     const newPost = {
         title: 'post title',
         url: 'https://www.google.com',
-        summary: 'post summary'
+        summary: 'post summary',
+        subreddit: 'test',
     };
 
     const user = {
         username: 'poststest',
-        password: 'testposts'
+        password: 'testposts',
     };
 
     before(function (done) {
@@ -46,9 +47,7 @@ describe('Posts', function () {
         // Checks how many posts there are now
         Post.estimatedDocumentCount()
             .then(function (initialDocCount) {
-                chai
-                    // console.log(user)
-                    .request(app)
+                agent
                     .post("/posts/new")
                     // This line fakes a form post,
                     // since we're not actually filling out a form
