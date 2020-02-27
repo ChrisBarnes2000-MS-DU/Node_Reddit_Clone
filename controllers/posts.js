@@ -6,7 +6,6 @@ module.exports = app => {
     app.get('/', (req, res) => {
         const currentUser = req.user;
         // res.render('home', {});
-        console.log(req.cookies);
         Post.find().populate('author')
             .lean()
             .then(posts => {
@@ -81,7 +80,10 @@ module.exports = app => {
     // Voting
     app.put("/posts/:id/vote-up", function (req, res) {
         Post.findById(req.params.id).exec(function (err, post) {
+            console.log("\n\n you voted up on", post.title)
             post.upVotes.push(req.user._id);
+            console.log("made it pass push")
+            console.log(post.voteScore)
             post.voteScore = post.voteScore + 1;
             post.save();
 

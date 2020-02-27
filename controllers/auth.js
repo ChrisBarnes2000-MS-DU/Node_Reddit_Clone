@@ -40,7 +40,6 @@ module.exports = app  => {
                     // User not found
                     return res.status(401).send({ message: "Wrong Username or Password" });
                 }
-                console.log(user)
                 // Check the password
                 user.comparePassword(password, (err, isMatch) => {
                     if (!isMatch) {
